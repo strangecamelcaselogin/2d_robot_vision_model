@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, random
 from math import cos, sin, pi
 
 from constants import *
@@ -10,10 +10,11 @@ class Figure:
     used_points = []
 
     def __init__(self, game, vertices=None):
+        self.game = game
+
         self.width = 1
         self.color = black
-        self.vertices = []
-        self.game = game
+        self.vertices = [] #  vertices or None
 
         if vertices:
             self.vertices = vertices
@@ -24,12 +25,12 @@ class Figure:
                 x = randint(MAX_FIGURE_RAD, DISPLAY_RES[0] - MAX_FIGURE_RAD)
                 y = randint(MAX_FIGURE_RAD, DISPLAY_RES[1] - MAX_FIGURE_RAD)
 
-                if len(Figure.used_points) > 0:
+                if len(Figure.used_points) == 0:
+                    break
+                else:
                     for used_x, used_y in Figure.used_points:
                         if (x - used_x)**2 + (y - used_y)**2 < 4 * MAX_FIGURE_RAD**2:
                             collide = True
-                else:
-                    break
 
                 if not collide:
                     break
@@ -37,10 +38,10 @@ class Figure:
             Figure.used_points.append((x, y))
             self.__gen_figure((x, y))
 
-    def __gen_figure(self, base_point):  # MORE RANDOM
+    def __gen_figure(self, base_point):
         shapes_count = randint(MIN_SHAPES_COUNT, MAX_SHAPES_COUNT)
 
-        fi = 0
+        fi = 0 # NEED MORE RANDOM
         for shape_number in range(shapes_count):
             r = randint(MIN_FIGURE_RAD, MAX_FIGURE_RAD)
             x = int(base_point[0] + r * cos(fi))

@@ -60,6 +60,7 @@ class Robot:
         x, y = self.position
         self.game.draw.circle(surface, black, (int(x), int(y)), 10, 1)
         intersect_point = self.get_distance(figures)
+
         if intersect_point:
             self.game.draw.line(self.surface, red, self.position, intersect_point, 1)
         else:
