@@ -1,19 +1,20 @@
 import pygame
-from constants import *
 from figure import Figure
 from robot import Robot
+from settings_storage import settings
 
 
 if __name__ == '__main__':
+
     pygame.init()
-    gameDisplay = pygame.display.set_mode(DISPLAY_RES)
+    gameDisplay = pygame.display.set_mode(settings.DISPLAY_RES)
     clock = pygame.time.Clock()
     pygame.key.set_repeat(500, 25)
     text = pygame.font.SysFont("monospace", 15)
 
-    figures = [Figure(pygame) for i in range(FIGURES_COUNT)]
+    figures = [Figure(pygame) for i in range(settings.FIGURES_COUNT)]
 
-    robot = Robot(pygame, gameDisplay, [DISPLAY_RES[0] / 2, DISPLAY_RES[1] / 2], 0)
+    robot = Robot(pygame, gameDisplay, [settings.DISPLAY_RES[0] / 2, settings.DISPLAY_RES[1] / 2], 0)
 
     delta_alpha = 0
     stop = False
@@ -42,9 +43,9 @@ if __name__ == '__main__':
                     robot.move(5, 0)
 
         # DRAW #
-        gameDisplay.fill(white)
+        gameDisplay.fill(settings.white)
 
-        label = text.render('da: ' + str(round(delta_alpha, 4)), 1, black)
+        label = text.render('da: ' + str(round(delta_alpha, 4)), 1, settings.black)
         gameDisplay.blit(label, (10, 10))
 
         robot.draw_vision(gameDisplay, figures)
@@ -55,7 +56,7 @@ if __name__ == '__main__':
         # UPDATE #
 
         pygame.display.update()
-        clock.tick(FPS)
+        clock.tick(settings.FPS)
         robot.update(delta_alpha)
         pygame.display.set_caption('FPS: ' + str(int(clock.get_fps())))
 

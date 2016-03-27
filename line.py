@@ -1,9 +1,11 @@
-from constants import *
-# LINE #
+from settings_storage import settings
 
 
 class Line:
     '''
+    Line class, implement math short line
+    Класс, реализующий отрезок
+
     some SO code
     http://stackoverflow.com/questions/20677795/find-the-point-of-intersecting-lines
     http://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment
@@ -19,7 +21,7 @@ class Line:
     def intersect(self, line):
         def is_between(a, b, c):
             cross_product = (c[1] - a[1]) * (b[0] - a[0]) - (c[0] - a[0]) * (b[1] - a[1])
-            if abs(cross_product) > EPS:
+            if abs(cross_product) > settings.EPS:
                 return False
 
             dot_product = (c[0] - a[0]) * (b[0] - a[0]) + (c[1] - a[1])*(b[1] - a[1])

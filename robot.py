@@ -1,18 +1,20 @@
 from math import cos, sin, sqrt, pi
-from constants import *
+from settings_storage import settings
 from line import Line
-
-# ROBOT #
 
 
 class Robot:
+    '''
+    Robot class, implements math, move and draw
+    Класс робот, реализует расчеты, движение и отрисовку
+    '''
     def __init__(self, game, surface, position, visor_angle):
         self.game = game
         self.surface = surface
         self.position = position
         self.visor_angle = visor_angle
         self.angle = 0
-        self.tail_long = sqrt(DISPLAY_RES[0] ** 2 + DISPLAY_RES[1] ** 2) / 2
+        self.tail_long = sqrt(settings.DISPLAY_RES[0] ** 2 + settings.DISPLAY_RES[1] ** 2) / 2
         self.tail = [0, 0]
 
     def update(self, da):
@@ -58,10 +60,10 @@ class Robot:
 
     def draw_vision(self, surface, figures):
         x, y = self.position
-        self.game.draw.circle(surface, black, (int(x), int(y)), 10, 1)
+        self.game.draw.circle(surface, settings.black, (int(x), int(y)), 10, 1)
         intersect_point = self.get_distance(figures)
 
         if intersect_point:
-            self.game.draw.line(self.surface, red, self.position, intersect_point, 1)
+            self.game.draw.line(self.surface, settings.red, self.position, intersect_point, 1)
         else:
-            self.game.draw.line(surface, green, self.position, self.tail, 1)
+            self.game.draw.line(surface, settings.green, self.position, self.tail, 1)
