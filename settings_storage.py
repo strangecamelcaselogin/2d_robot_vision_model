@@ -28,4 +28,11 @@ class SettingsStorage:
         f.close()
 
 
-settings = SettingsStorage(SETTINGS_NAME)
+if __name__ == '__main__':
+    print('test branch')
+    c = SettingsStorage(SETTINGS_NAME)
+    for key, value in c.__dict__.items():
+        print(key, '=', value)
+
+else:
+    settings = SettingsStorage(SETTINGS_NAME)

@@ -9,23 +9,25 @@ class Figure:
     implement randoms figures on field
     реализует фигуры на поле
     '''
-    used_points = []
+    used_points = [settings.SPAWN_POINT]
 
     def __init__(self, game, vertices=None):
         self.game = game
 
         self.width = 1
         self.color = settings.black
-        self.vertices = [] #  vertices or None
+        self.vertices = vertices
 
-        if vertices:
-            self.vertices = vertices
-        else:
+        if self.vertices is None:
+            self.vertices = []
             x, y = 0, 0
             while True:
                 collide = False
-                x = randint(settings.MAX_FIGURE_RAD, settings.DISPLAY_RES[0] - settings.MAX_FIGURE_RAD)
-                y = randint(settings.MAX_FIGURE_RAD, settings.DISPLAY_RES[1] - settings.MAX_FIGURE_RAD)
+                x = randint(settings.MAX_FIGURE_RAD,
+                            settings.DISPLAY_RES[0] - settings.MAX_FIGURE_RAD)
+
+                y = randint(settings.MAX_FIGURE_RAD,
+                            settings.DISPLAY_RES[1] - settings.MAX_FIGURE_RAD)
 
                 if len(Figure.used_points) == 0:
                     break

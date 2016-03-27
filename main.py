@@ -1,6 +1,6 @@
 import pygame
-from figure import Figure
 from robot import Robot
+from figure import Figure
 from settings_storage import settings
 
 
@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     figures = [Figure(pygame) for i in range(settings.FIGURES_COUNT)]
 
-    robot = Robot(pygame, gameDisplay, [settings.DISPLAY_RES[0] / 2, settings.DISPLAY_RES[1] / 2], 0)
+    robot = Robot(pygame, gameDisplay, settings.SPAWN_POINT, 0)
 
     delta_alpha = 0
     stop = False
