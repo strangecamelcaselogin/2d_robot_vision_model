@@ -3,62 +3,75 @@ from robot import Robot
 from figure import Figure
 from settings_storage import settings
 
+SETTINGS_FILE = 'settings\\test_settings'
 
-if __name__ == '__main__':
-    settings.load('settings')
 
-    pygame.init()
-    gameDisplay = pygame.display.set_mode(settings.DISPLAY_RES)
-    clock = pygame.time.Clock()
-    pygame.key.set_repeat(500, 25)
-    text = pygame.font.SysFont("monospace", 15)
+class Environment:
+    def __init__(self):
+        self.settings = settings
+        self.settings.load(SETTINGS_FILE)
 
-    figures = [Figure(pygame, gameDisplay) for i in range(settings.FIGURES_COUNT)]
+        pygame.init()
+        pygame.key.set_repeat(500, 25)
 
-    robot = Robot(pygame, gameDisplay, settings.SPAWN_POINT, 0)
+        self.surface = pygame.display.set_mode(settings.DISPLAY_RES)
+        self.clock = pygame.time.Clock()
+        self.text = pygame.font.SysFont("monospace", 15)
 
-    delta_alpha = 0
-    stop = False
-    while not stop:
-        # EVENTS #
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                stop = True
+        self.figures = [Figure(i, pygame, self.surface, False) for i in range(settings.FIGURES_COUNT)]
+        self.robot = Robot(pygame, self.surface, settings.SPAWN_POINT, 0)
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+    def run(self):
+        delta_alpha = 0
+        stop = False
+        while not stop:
+            # EVENTS #
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     stop = True
 
-                if event.key == pygame.K_DOWN:
-                    delta_alpha += 0.001
-                if event.key == pygame.K_UP:
-                    delta_alpha -= 0.001
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        stop = True
 
-                if event.key == pygame.K_w:
-                    robot.move(0, -5)
-                if event.key == pygame.K_s:
-                    robot.move(0, 5)
-                if event.key == pygame.K_a:
-                    robot.move(-5, 0)
-                if event.key == pygame.K_d:
-                    robot.move(5, 0)
+                    if event.key == pygame.K_DOWN:
+                        delta_alpha += 0.001
+                    if event.key == pygame.K_UP:
+                        delta_alpha -= 0.001
 
-        # DRAW #
-        gameDisplay.fill(settings.white)
+                    if event.key == pygame.K_w:
+                        self.robot.move(0, -5)
+                    if event.key == pygame.K_s:
+                        self.robot.move(0, 5)
+                    if event.key == pygame.K_a:
+                        self.robot.move(-5, 0)
+                    if event.key == pygame.K_d:
+                        self.robot.move(5, 0)
 
-        label = text.render('da: ' + str(round(delta_alpha, 4)), 1, settings.black)
-        gameDisplay.blit(label, (10, 10))
+            # DRAW #
+            self.surface.fill(settings.white)
 
-        robot.draw_vision(figures)
+            label = self.text.render('da: ' + str(round(delta_alpha, 4)), 1, settings.black)
+            self.surface.blit(label, (10, 10))
 
-        for figure in figures:
-            figure.draw()
+            self.robot.draw_vision(self.figures)
 
-        # UPDATE #
+            for figure in self.figures:
+                figure.draw()
 
-        pygame.display.update()
-        clock.tick(settings.FPS)
-        robot.update(delta_alpha)
-        pygame.display.set_caption('FPS: ' + str(int(clock.get_fps())))
+            # UPDATE #
 
-    pygame.quit()
+            pygame.display.update()
+            self.clock.tick(settings.FPS)
+            self.robot.update(delta_alpha)
+            pygame.display.set_caption('FPS: ' + str(int(self.clock.get_fps())))
+
+        for f in self.figures:
+            f.save()
+
+        pygame.quit()
+
+
+if __name__ == '__main__':
+    env = Environment()
+    env.run()
