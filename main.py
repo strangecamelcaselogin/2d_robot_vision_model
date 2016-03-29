@@ -5,6 +5,7 @@ from settings_storage import settings
 
 
 if __name__ == '__main__':
+    settings.load('settings')
 
     pygame.init()
     gameDisplay = pygame.display.set_mode(settings.DISPLAY_RES)

@@ -9,7 +9,7 @@ class Figure:
     implement randoms figures on field
     реализует фигуры на поле
     '''
-    used_points = [settings.SPAWN_POINT]
+    used_points = []
 
     def __init__(self, game, vertices=None):
         self.game = game
@@ -17,6 +17,8 @@ class Figure:
         self.width = 1
         self.color = settings.black
         self.vertices = vertices
+
+        Figure.used_points.append(settings.SPAWN_POINT)
 
         if self.vertices is None:
             self.vertices = []
