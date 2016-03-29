@@ -3,7 +3,7 @@ from robot import Robot
 from figure import Figure
 from settings_storage import settings
 
-SETTINGS_FILE = 'settings\\test_settings'
+SETTINGS_FILE = 'settings_\\test_settings'
 
 
 class Environment:
