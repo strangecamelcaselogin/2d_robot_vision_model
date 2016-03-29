@@ -13,7 +13,7 @@ if __name__ == '__main__':
     pygame.key.set_repeat(500, 25)
     text = pygame.font.SysFont("monospace", 15)
 
-    figures = [Figure(pygame) for i in range(settings.FIGURES_COUNT)]
+    figures = [Figure(pygame, gameDisplay) for i in range(settings.FIGURES_COUNT)]
 
     robot = Robot(pygame, gameDisplay, settings.SPAWN_POINT, 0)
 
@@ -49,10 +49,10 @@ if __name__ == '__main__':
         label = text.render('da: ' + str(round(delta_alpha, 4)), 1, settings.black)
         gameDisplay.blit(label, (10, 10))
 
-        robot.draw_vision(gameDisplay, figures)
+        robot.draw_vision(figures)
 
         for figure in figures:
-            figure.draw(gameDisplay)
+            figure.draw()
 
         # UPDATE #
 

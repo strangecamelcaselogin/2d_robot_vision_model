@@ -11,9 +11,9 @@ class Figure:
     '''
     used_points = []
 
-    def __init__(self, game, vertices=None):
+    def __init__(self, game, surface, vertices=None):
         self.game = game
-
+        self.surface = surface
         self.width = 1
         self.color = settings.black
         self.vertices = vertices
@@ -57,10 +57,15 @@ class Figure:
 
             fi += 2 * pi/shapes_count
 
-    def draw(self, surface):
-        self.game.draw.polygon(surface, self.color, self.vertices, self.width)
+    def draw(self):
+        self.game.draw.polygon(self.surface, self.color, self.vertices, self.width)
 
+    def draw_circles(self):
+        for point in Figure.used_points:
+            self.game.draw.circle(self.surface, settings.red, point, settings.MAX_FIGURE_RAD, 1)
 
-    #def draw_circles(surface):
-    #    for point in Figure.used_points:
-    #        self.game.draw.circle(surface, red, point, MAX_FIGURE_RAD, 1)
+    def save(self):
+        pass
+
+    def load(self):
+        pass

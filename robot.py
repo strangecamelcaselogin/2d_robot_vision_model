@@ -11,6 +11,7 @@ class Robot:
     def __init__(self, game, surface, position, visor_angle):
         self.game = game
         self.surface = surface
+
         self.position = position
         self.visor_angle = visor_angle
         self.angle = 0
@@ -58,12 +59,12 @@ class Robot:
 
         return False
 
-    def draw_vision(self, surface, figures):
+    def draw_vision(self, figures):
         x, y = self.position
-        self.game.draw.circle(surface, settings.black, (int(x), int(y)), 10, 1)
+        self.game.draw.circle(self.surface, settings.black, (int(x), int(y)), 10, 1)
         intersect_point = self.get_distance(figures)
 
         if intersect_point:
             self.game.draw.line(self.surface, settings.red, self.position, intersect_point, 1)
         else:
-            self.game.draw.line(surface, settings.green, self.position, self.tail, 1)
+            self.game.draw.line(self.surface, settings.green, self.position, self.tail, 1)
