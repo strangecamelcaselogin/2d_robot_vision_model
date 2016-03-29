@@ -1,17 +1,24 @@
-class SettingsStorage:
+class SettingsStorage(dict):
     '''
     Store your settings with access through the point
     Настройки с доступом через точку
     '''
     def __setattr__(self, key, value):
-        self.__dict__.update({key, value})
+        self[key] = value
 
-    def load(self, path):
-        self.__dict__['path'] = path
+    def __getattr__(self, key):
+        try:
+            return self[key]
+
+        except KeyError as e:
+            print(e)
+
+    def load(self, settings_path):
+        self.path = settings_path
 
         try:
             f = open(self.path, 'r')
-            self.__dict__.update(eval(f.read()))
+            self.update(eval(f.read()))
 
         except Exception as e:
             print(e)
@@ -24,13 +31,4 @@ class SettingsStorage:
         f.write(repr(self.__dict__))
         f.close()
 
-
-if __name__ == '__main__':
-    print('test branch')
-    c = SettingsStorage()
-    c.load('settings')
-    for key, value in c.__dict__.items():
-        print(key, '=', value)
-
-else:
-    settings = SettingsStorage()
+settings = SettingsStorage()
