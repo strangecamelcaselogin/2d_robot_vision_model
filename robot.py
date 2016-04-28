@@ -27,7 +27,7 @@ class Robot:
         self.position[0] += dx
         self.position[1] += dy
 
-    def get_distance(self, figures):
+    def get_intersect_point(self, figures):
         def how_far(p1, p2):
             return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
@@ -36,7 +36,7 @@ class Robot:
         min_dist = 10000
         min_point = []
         find_intersect_point = False
-        storage = []
+        #storage = []
         for figure in figures:
             vertices_count = len(figure.vertices)
             for i in range(vertices_count):
@@ -51,18 +51,22 @@ class Robot:
                     if dist < min_dist:
                         min_dist = dist
                         min_point = intersect_point
-                    else:
-                        storage.append(intersect_point)
+                    #else:
+                        #storage.append(intersect_point)
 
         if find_intersect_point:
             return min_point
 
         return False
 
+    def data_export(self):
+        pass
+
     def draw_vision(self, figures):
         x, y = self.position
         self.game.draw.circle(self.surface, settings.black, (int(x), int(y)), 10, 1)
-        intersect_point = self.get_distance(figures)
+
+        intersect_point = self.get_intersect_point(figures)
 
         if intersect_point:
             self.game.draw.line(self.surface, settings.red, self.position, intersect_point, 1)

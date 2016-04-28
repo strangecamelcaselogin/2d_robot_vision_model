@@ -18,8 +18,16 @@ class Environment:
         self.clock = pygame.time.Clock()
         self.text = pygame.font.SysFont("monospace", 15)
 
-        self.figures = [Figure(i, pygame, self.surface, False) for i in range(settings.FIGURES_COUNT)]
+        self.figures = [Figure(pygame, i, self.surface, False) for i in range(settings.FIGURES_COUNT)]
         self.robot = Robot(pygame, self.surface, settings.SPAWN_POINT, 0)
+
+    def save(self):
+        pass
+
+    def load(self):
+        pass
+
+
 
     def run(self):
         delta_alpha = 0

@@ -13,7 +13,7 @@ class Figure:
     '''
     _used_points = []
 
-    def __init__(self, id, pygame, surface, load=False):
+    def __init__(self, pygame,  id,  surface, load=False):
         self.id = id
         self.pygame = pygame
         self.surface = surface
